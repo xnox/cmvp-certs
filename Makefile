@@ -6,7 +6,11 @@ all: 2026/5162 2026/5161 2026/5160 2026/5159 2026/5158 2026/5157 2026/5156 2026/
 
 %:
 	mkdir -p $(dir $@)
-	curl --clobber -O $(dir $@)/140sp$(notdir $@).pdf https://csrc.nist.gov/CSRC/media/projects/cryptographic-module-validation-program/documents/security-policies/140sp$(notdir $@).pdf
-	curl --clobber -O $@ https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/$(notdir $@)
+	wcurl -O $(dir $@)/140sp$(notdir $@).pdf https://csrc.nist.gov/CSRC/media/projects/cryptographic-module-validation-program/documents/security-policies/140sp$(notdir $@).pdf
+	wcurl -O $@ https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/$(notdir $@)
 
 .PHONY: all
+
+create-venv:
+	uv venv --python=3.13 .venv
+	. .venv/bin/activate; uv pip install 'markitdown[pdf]'
